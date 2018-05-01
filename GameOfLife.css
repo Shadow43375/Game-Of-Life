@@ -1,0 +1,64 @@
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+#gameContainer {
+  width: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+#ticTacInterface {
+  width: 80vh;
+  height: 80vh;
+  display: flex;
+
+}
+
+#buttonArea {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#incrementButtonArea {
+  width: 45%;
+  height: 40px;
+}
+
+#startGameButton {
+  background-color: rgb(66, 244, 110);
+/*  border-radius: 5px;*/
+  border: none;
+  box-shadow: 2px 3px 7px -1px rgba(0,0,0,0.75);
+  cursor: pointer;
+  height: 100%;
+  width: 80%;
+}
+
+.stepButton {
+   width: 15%;
+   height: 100%;
+   cursor: pointer;
+   box-shadow: 2px 3px 7px -1px rgba(0,0,0,0.75);
+   cursor: pointer;
+   border-left: 1px solid rgb(146, 147, 147);
+}
+
+#resetButton {
+  background-color: rgb(60, 89, 193);
+  border-radius: 5px;
+  border: none;
+  box-shadow: 2px 3px 7px -1px rgba(0,0,0,0.75);
+  cursor: pointer;
+  height: 40px;
+  width: 45%;
+}
