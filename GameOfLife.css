@@ -99,6 +99,15 @@ html, body {
    border-left: 1px solid rgb(146, 147, 147);
 }
 
+.speedControlButton {
+   width: 10%;
+   height: 100%;
+   cursor: pointer;
+   box-shadow: 2px 3px 7px -1px rgba(0,0,0,0.75);
+   cursor: pointer;
+   border-left: 1px solid rgb(146, 147, 147);
+}
+
 #resetButton {
   background-color: rgb(60, 89, 193);
   border-radius: 5px;

@@ -43,8 +43,9 @@ resetGame();
 
 
 speedUpButton.addEventListener('click', function() {
-  if(tickTime > 500) {
-    tickTime = tickTime - 500;
+  if(tickTime > 250) {
+    tickTime = tickTime - 250;
+    document.getElementById("ticValueField").value = tickTime;
     clearInterval(setIntervalId);
     (function() {
         
@@ -87,7 +88,8 @@ startGameButton.addEventListener('click', function() {
 
 slowDownButton.addEventListener('click', function() {
   if(tickTime < 5000) {
-    tickTime = tickTime + 500;
+    tickTime = tickTime + 250;
+    document.getElementById("ticValueField").value = tickTime;
     clearInterval(setIntervalId);
       (function() {
         
