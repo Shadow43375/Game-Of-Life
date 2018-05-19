@@ -19,6 +19,10 @@ settingsButton.addEventListener('click', function() {
 overlayExitIcon.addEventListener('click', function() {
 //sets the overlay to hidden to exit out of the game settings menu
       document.getElementById("overlay").classList.add('hidden');
+
+      document.getElementById("gridDimensionsFieldX").value = numberOfCellsX;
+      document.getElementById("gridDimensionsFieldY").value = numberOfCellsY;
+      document.getElementById("ticValueField").value = tickTime;
 });
 
 generateGameButton.addEventListener('click', function() {

@@ -21,6 +21,40 @@ html, body {
   width: 100%;
 }
 
+#topSettingsDiv {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+#settingsButton {
+  width: 10%;
+  height: 100%;
+  font-size: 100%;
+  cursor: pointer;
+}
+
+#gameSettingsForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputArea  {
+  width: 35%;
+  margin-bottom: 10vh;
+  text-align: center;
+  color: white;
+}
+
+.inputArea > input {
+  padding: 10px;
+  width: 100%;
+}
+
+
 #gameContainer {
   width: 80vh;
   margin-left: auto;
