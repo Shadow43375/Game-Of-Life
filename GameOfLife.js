@@ -5,8 +5,9 @@ let overlay = document.getElementById('overlay');
 let overlayExitIcon = document.getElementById('overlayExitIcon');
 let generateGameButton = document.getElementById('generateGameButton');
 let startGameButton = document.getElementById('startGameButton');
-let stopGameButton = document.getElementById('stopGameButton');
-let stepBackButton = document.getElementById('stepBackButton');
+// let stopGameButton = document.getElementById('stopGameButton');
+let speedUpButton = document.getElementById('speedUpButton');
+let slowDownButton = document.getElementById('slowDownButton');
 let stepForwardButton = document.getElementById('stepForwardButton');
 var setIntervalId = null;
 let cellColorOnAlive =  "rgb(83, 109, 89)";
@@ -41,6 +42,20 @@ resetGame();
 });
 
 
+speedUpButton.addEventListener('click', function() {
+  if(tickTime > 500) {
+    tickTime = tickTime - 500;
+    clearInterval(setIntervalId);
+    (function() {
+        
+        setIntervalId = setInterval(function() {
+          gameState.drawMatrix(gameState.getNextState());
+        }, tickTime);
+      }());
+  }
+});
+
+
 startGameButton.addEventListener('click', function() {
  if(!gameState.running) {
     gameState.running = true;
@@ -53,7 +68,9 @@ startGameButton.addEventListener('click', function() {
     }());
     startGameButton.innerHTML = "Stop"
     startGameButton.style.backgroundColor = "red";
-    stepForwardButton.style.visibility = "hidden";
+    document.getElementById("stepForwardButton").classList.add("hidden");
+    document.getElementById("speedUpButton").classList.remove("hidden"); 
+    document.getElementById("slowDownButton").classList.remove("hidden");
  }
  else if(gameState.running) {
     gameState.running = false;
@@ -62,9 +79,29 @@ startGameButton.addEventListener('click', function() {
     }
     startGameButton.innerHTML = "Start"
     startGameButton.style.backgroundColor = "rgb(66, 244, 110)";
-    stepForwardButton.style.visibility = "visible";
+    document.getElementById("stepForwardButton").classList.remove("hidden");
+    document.getElementById("speedUpButton").classList.add("hidden"); 
+    document.getElementById("slowDownButton").classList.add("hidden");
  }
 });
+
+slowDownButton.addEventListener('click', function() {
+  if(tickTime < 5000) {
+    tickTime = tickTime + 500;
+    clearInterval(setIntervalId);
+      (function() {
+        
+        setIntervalId = setInterval(function() {
+          gameState.drawMatrix(gameState.getNextState());
+        }, tickTime);
+      }());
+  }
+});
+
+stepForwardButton.addEventListener('click', function() {
+  gameState.drawMatrix(gameState.getNextState());
+});
+
 
 resetButton.addEventListener('click', function() {
   //not sure why clearing the interval is not working inside of the clearInterval function.
@@ -75,10 +112,6 @@ resetButton.addEventListener('click', function() {
   resetGame();
 });
 
-
-stepForwardButton.addEventListener('click', function() {
-  gameState.drawMatrix(gameState.getNextState());
-});
 
 
 
@@ -306,7 +339,9 @@ function resetGame(setIntervalId) {
     clearInterval(setIntervalId);
     startGameButton.innerHTML = "Start"
     startGameButton.style.backgroundColor = "rgb(66, 244, 110)";
-    stepForwardButton.style.visibility = "visible";
+    document.getElementById("stepForwardButton").classList.remove("hidden");
+    document.getElementById("speedUpButton").classList.add("hidden"); 
+    document.getElementById("slowDownButton").classList.add("hidden");
     newGridContainer.clearGrid();
     gameState = new GameState(numberOfCellsX, numberOfCellsY);
     newGridContainer = new GridContainer(numberOfCellsX, numberOfCellsY);  
