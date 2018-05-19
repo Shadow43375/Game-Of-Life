@@ -9,6 +9,18 @@ html, body {
   width: 100%;
 }
 
+.hidden {
+  display: none;
+}
+
+#overlay {
+  background-color: rgba(100, 100, 255, 0.96);
+  position: absolute;
+  top: 0px;
+  height: 120%;
+  width: 100%;
+}
+
 #gameContainer {
   width: 80vh;
   margin-left: auto;
@@ -62,3 +74,13 @@ html, body {
   height: 40px;
   width: 45%;
 }
+
+
+#overlayExitIcon {
+  font-size: 3em;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  left: 90%;
+}
+

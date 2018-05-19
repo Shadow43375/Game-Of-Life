@@ -1,11 +1,41 @@
 //inserts the body element into the DOM.
 let body = document.querySelector('body');
+let settingsButton = document.getElementById('settingsButton');
+let overlay = document.getElementById('overlay');
+let overlayExitIcon = document.getElementById('overlayExitIcon');
+let generateGameButton = document.getElementById('generateGameButton');
 let startGameButton = document.getElementById('startGameButton');
 let stopGameButton = document.getElementById('stopGameButton');
 let stepBackButton = document.getElementById('stepBackButton');
 let stepForwardButton = document.getElementById('stepForwardButton');
 var setIntervalId = null;
 let cellColorOnAlive =  "rgb(83, 109, 89)";
+var tickTime = 500;
+
+settingsButton.addEventListener('click', function() {
+  document.getElementById("overlay").classList.remove("hidden"); 
+});
+
+overlayExitIcon.addEventListener('click', function() {
+//sets the overlay to hidden to exit out of the game settings menu
+      document.getElementById("overlay").classList.add('hidden');
+});
+
+generateGameButton.addEventListener('click', function() {
+  if(Number(document.getElementById("gridDimensionsFieldX").value) !== 0) {
+  numberOfCellsX = Number(document.getElementById("gridDimensionsFieldX").value);    
+  }
+  if(Number(document.getElementById("gridDimensionsFieldY").value) !== 0) {
+  numberOfCellsY = Number(document.getElementById("gridDimensionsFieldY").value);  
+}
+  if(Number(document.getElementById("gridDimensionsFieldY").value) !== 0) {
+  tickTime = Number(document.getElementById("ticValueField").value);  
+}
+document.getElementById("overlay").classList.add('hidden');    
+clearInterval(setIntervalId);
+resetGame(); 
+});
+
 
 startGameButton.addEventListener('click', function() {
  if(!gameState.running) {
@@ -15,7 +45,7 @@ startGameButton.addEventListener('click', function() {
       
       setIntervalId = setInterval(function() {
         gameState.drawMatrix(gameState.getNextState());
-      }, 1000);
+      }, tickTime);
     }());
     startGameButton.innerHTML = "Stop"
     startGameButton.style.backgroundColor = "red";
@@ -112,10 +142,12 @@ GameState.prototype.getNextState = function() {
         });
         if(findCellState(cell, numberOfNeighbors)) {
           console.log("this cell is going to now be alive!");
+          cell.newDiv.cellState = "alive";
           rowElement.push(cellColorOnAlive);
         }
         else if(!findCellState(cell, numberOfNeighbors)) {
           console.log("nope: this cell ain't gonna live");
+          cell.newDiv.cellState = "dead";
           rowElement.push("transparent");
         }
       }
@@ -173,10 +205,12 @@ let GridContainer = function(numberOfCellsX, numberOfCellsY) {
   function clickCell() {
     if(gameState.running === false) {
       if(this.cellState === "dead") {
+        console.log("this cell is now alive.");
         this.style.backgroundColor = cellColorOnAlive; 
         this.cellState = "alive";
       }
       else if(this.cellState === "alive") {
+        console.log("this cell is now dead")
         this.style.backgroundColor = "transparent";
         this.cellState = "dead";
       }
@@ -265,6 +299,7 @@ let GridContainer = function(numberOfCellsX, numberOfCellsY) {
 
 function resetGame(setIntervalId) {
     gameState.running = false;
+    clearInterval(setIntervalId);
     startGameButton.innerHTML = "Start"
     startGameButton.style.backgroundColor = "rgb(66, 244, 110)";
     stepForwardButton.style.visibility = "visible";

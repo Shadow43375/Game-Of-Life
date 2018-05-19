@@ -4,6 +4,29 @@
     <link rel="stylesheet" type="text/css" href="GameOfLife.css">   
   </head>
   <body>
+
+      <div class="hidden" id='overlay'>
+        <i class="fa fa-remove" id="overlayExitIcon">X</i>
+
+        <form id="gameSettingsForm">
+          <div class="inputArea">
+            <div> Width of Game Board </div>
+            <input type="number" min="1" max="50" id="gridDimensionsFieldX" value="10">        
+          </div>
+          <div class="inputArea">
+            <div> Height of Game Board </div>
+            <input type="number" min="1" max="50" id="gridDimensionsFieldY" value="10">       
+          </div>
+          <div class="inputArea">
+            <div> Time between iterations (in milliseconds) </div>
+            <input type="number" min="250" max="5000" id="ticValueField" value="500">       
+          </div>
+          <button type="button" id="generateGameButton"> Generate Game </button>
+          
+        </form> 
+      </div>
+
+    <button id="settingsButton">Settings</button>
     <div id="gameContainer">
       <div id="ticTacInterface"></div>
       <div id="buttonArea">
