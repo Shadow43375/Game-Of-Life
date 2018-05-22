@@ -5,12 +5,17 @@ let overlay = document.getElementById('overlay');
 let overlayExitIcon = document.getElementById('overlayExitIcon');
 let generateGameButton = document.getElementById('generateGameButton');
 let startGameButton = document.getElementById('startGameButton');
-// let stopGameButton = document.getElementById('stopGameButton');
 let speedUpButton = document.getElementById('speedUpButton');
 let slowDownButton = document.getElementById('slowDownButton');
 let stepForwardButton = document.getElementById('stepForwardButton');
 var setIntervalId = null;
-let cellColorOnAlive =  "rgb(83, 109, 89)";
+let r = 83,
+    g = 109,
+    b = 89;
+let cellColorOnAlive =  "rgb(" + r + ", " + g + ", " + b + ")";
+var colorPicker = document.getElementById('colorPicker');
+var newColorButton = new jscolor(colorPicker);
+newColorButton.fromRGB(r, g, b);
 var tickTime = 500;
 
 settingsButton.addEventListener('click', function() {
@@ -24,7 +29,7 @@ overlayExitIcon.addEventListener('click', function() {
       document.getElementById("gridDimensionsFieldX").value = numberOfCellsX;
       document.getElementById("gridDimensionsFieldY").value = numberOfCellsY;
       document.getElementById("ticValueField").value = tickTime;
-      document.getElementById('colorPicker').value = cellColorOnAlive;
+      newColorButton.fromRGB(r, g, b);
 });
 
 generateGameButton.addEventListener('click', function() {
@@ -39,7 +44,7 @@ generateGameButton.addEventListener('click', function() {
 }
 
 //need to be VERY careful here. Color picked value is string hex while RGB is needed. EXACT same string value. Even spaces...
- cellColorOnAlive = convertHex(document.getElementById('colorPicker').value);
+ cellColorOnAlive = convertHex(colorPicker.value);
 
 document.getElementById("overlay").classList.add('hidden');    
 clearInterval(setIntervalId);
