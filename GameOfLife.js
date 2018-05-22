@@ -157,7 +157,7 @@ GameState.prototype.getNextState = function() {
     let findCellState = function(cell, numberOfNeighbors) {
       let numberOfNeighborsToLive = 2;
       let numberOfNeighborsToDie = 4;
-      if(cell.newDiv.style.backgroundColor === cellColorOnAlive) {
+      if(cell.newDiv.cellState === 'alive') {
         if(numberOfNeighbors >= numberOfNeighborsToLive && numberOfNeighbors<numberOfNeighborsToDie ) {
           return true
         }
@@ -165,7 +165,7 @@ GameState.prototype.getNextState = function() {
           return false;
         }      
       }
-      else if(cell.newDiv.style.backgroundColor !== cellColorOnAlive) {
+      else if(cell.newDiv.cellState !== 'alive') {
         if(numberOfNeighbors === 3) {
           return true;
         }
@@ -184,20 +184,20 @@ GameState.prototype.getNextState = function() {
         console.log("At cell = (" + j + "," + i + ")");
         this.patternVectors.forEach(function(element) {
           console.log("checking x = " + String(j + element[0]) + ", and y = " + String(i + element[1]));
-          if(stateMatrix[i+element[1]] && stateMatrix[i+element[1]][j+element[0]] && stateMatrix[i+element[1]][j+element[0]].newDiv.style.backgroundColor === cellColorOnAlive) {
+          if(stateMatrix[i+element[1]] && stateMatrix[i+element[1]][j+element[0]] && stateMatrix[i+element[1]][j+element[0]].newDiv.cellState === 'alive') {
             console.log("found one");
             numberOfNeighbors++;
           }
         });
         if(findCellState(cell, numberOfNeighbors)) {
           console.log("this cell is going to now be alive!");
-          cell.newDiv.cellState = "alive";
-          rowElement.push(cellColorOnAlive);
+          // cell.newDiv.cellState = "alive";
+          rowElement.push("alive");
         }
         else if(!findCellState(cell, numberOfNeighbors)) {
           console.log("nope: this cell ain't gonna live");
-          cell.newDiv.cellState = "dead";
-          rowElement.push("transparent");
+          // cell.newDiv.cellState = "dead";
+          rowElement.push("dead");
         }
       }
       nextMatrixState.push(rowElement);
@@ -213,9 +213,16 @@ GameState.prototype.drawMatrix = function(matrix) {
   
   for(let i = 0; i < numberOfRows; i++) {
     for(let j = 0; j < numberOfColumns; j++) {
-      this.rows[i][j].newDiv.style.backgroundColor = matrix[i][j]
-      if(matrix[i][j] === cellColorOnAlive) {
-        this.rows[i][j].newDiv.cellState = "alive";
+      //might need to start working with more complex objects that include cellState an its currents color
+      // this.rows[i][j].newDiv.cellState = matrix[i][j]
+      if(matrix[i][j] === 'alive') {
+        // this.rows[i][j].newDiv.cellState = "alive";
+        this.rows[i][j].newDiv.style.backgroundColor = cellColorOnAlive;
+        this.rows[i][j].newDiv.cellState = 'alive';
+      }
+      else if(matrix[i][j] !== 'alive') {
+        this.rows[i][j].newDiv.cellState = 'dead';
+        this.rows[i][j].newDiv.style.backgroundColor = "transparent";
       }
     }
   }
