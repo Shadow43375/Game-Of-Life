@@ -1,0 +1,17 @@
+{
+  "name": "GameOfLife",
+  "main": "GameOfLife.js",
+  "homepage": "https://github.com/Shadow43375/Game-Of-Life",
+  "authors": [
+    "James S. Bayne <enyab.null@gmail.com>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

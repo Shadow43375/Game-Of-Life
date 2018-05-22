@@ -24,6 +24,7 @@ overlayExitIcon.addEventListener('click', function() {
       document.getElementById("gridDimensionsFieldX").value = numberOfCellsX;
       document.getElementById("gridDimensionsFieldY").value = numberOfCellsY;
       document.getElementById("ticValueField").value = tickTime;
+      document.getElementById('colorPicker').value = cellColorOnAlive;
 });
 
 generateGameButton.addEventListener('click', function() {
@@ -36,6 +37,10 @@ generateGameButton.addEventListener('click', function() {
   if(Number(document.getElementById("gridDimensionsFieldY").value) !== 0) {
   tickTime = Number(document.getElementById("ticValueField").value);  
 }
+
+//need to be VERY careful here. Color picked value is string hex while RGB is needed. EXACT same string value. Even spaces...
+ cellColorOnAlive = convertHex(document.getElementById('colorPicker').value);
+
 document.getElementById("overlay").classList.add('hidden');    
 clearInterval(setIntervalId);
 resetGame(); 
@@ -290,7 +295,7 @@ let GridContainer = function(numberOfCellsX, numberOfCellsY) {
       this.newDiv.style.height= "calc(100%/" + numberOfCellsX + ")";
       this.newDiv.style.width = "calc(100%/" + numberOfCellsX + ")";      
     }
-    this.newDiv.style.border = "1px black solid"
+    this.newDiv.style.border = "1px grey solid"
     this.newDiv.style.cursor = "pointer";
     this.newDiv.onclick = clickCell.bind(this.newDiv);
     this.newDiv.onmouseover = hoverEffect.bind(this.newDiv);
@@ -347,6 +352,16 @@ function resetGame(setIntervalId) {
     newGridContainer.clearGrid();
     gameState = new GameState(numberOfCellsX, numberOfCellsY);
     newGridContainer = new GridContainer(numberOfCellsX, numberOfCellsY);  
+}
+
+function convertHex(hex){
+    hex = hex.replace('#','');
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+
+    result = 'rgb('+r+', '+g+', '+b+')';
+    return result;
 }
 
 // initalizes the grid of cells based on the parameters numberofCellsX and numberOfCellsY

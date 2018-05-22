@@ -20,9 +20,13 @@
             <div> Time between iterations (in milliseconds) </div>
             <input type="number" min="250" max="5000" id="ticValueField" value="500">       
           </div>
+          <div class="inputArea">
+            <div> Color of living cells </div>
+            <input class="jscolor" id='colorPicker'></button>          
+          </div>
           <button type="button" id="generateGameButton"> Generate Game </button>
-          
         </form> 
+
       </div>
 
     <div id="gameContainer">
@@ -44,6 +48,7 @@
         </button>
       </div>
     
+    <script src="libraries/jscolor.js"></script>
     <script src="GameOfLife.js"></script>
   </body>
 </html>

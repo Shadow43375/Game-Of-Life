@@ -49,11 +49,16 @@ html, body {
   color: white;
 }
 
-.inputArea > input {
+.inputArea > input, .inputArea > button {
   padding: 10px;
   width: 100%;
 }
 
+/*#colorPicker {
+  padding: 10px;
+  width: 100%;  
+}
+*/
 
 #gameContainer {
   width: 80vh;
