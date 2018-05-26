@@ -208,8 +208,6 @@ GameState.prototype.getNextState = function() {
 GameState.prototype.drawMatrix = function(matrix) {
   let numberOfRows = matrix.length;
   let numberOfColumns = matrix[0].length;
-  console.log("matrix in matrix = ");
-  console.log(matrix);
   
   for(let i = 0; i < numberOfRows; i++) {
     for(let j = 0; j < numberOfColumns; j++) {
@@ -217,7 +215,7 @@ GameState.prototype.drawMatrix = function(matrix) {
       // this.rows[i][j].newDiv.cellState = matrix[i][j]
       if(matrix[i][j] === 'alive') {
         // this.rows[i][j].newDiv.cellState = "alive";
-        this.rows[i][j].newDiv.style.backgroundColor = cellColorOnAlive;
+        this.rows[i][j].newDiv.style.backgroundColor = averageColors(this.rows, i, j);
         this.rows[i][j].newDiv.cellState = 'alive';
       }
       else if(matrix[i][j] !== 'alive') {
@@ -365,6 +363,36 @@ function resetGame(setIntervalId) {
     gameState = new GameState(numberOfCellsX, numberOfCellsY);
     newGridContainer = new GridContainer(numberOfCellsX, numberOfCellsY);  
 }
+
+
+function averageColors(rows, i, j) {
+  // console.log("draw time");
+  // console.log(rows[i][j]);
+  // return "black";
+let patternVectors = [];
+patternVectors.push([-1, -1]);
+patternVectors.push([0, -1]);
+patternVectors.push([1, -1]);
+patternVectors.push([-1, 0]);
+// patternVectors.push([0, 0]);
+patternVectors.push([1, 0]);
+patternVectors.push([-1, 1]);
+patternVectors.push([0, 1]);
+patternVectors.push([1, 1]);
+
+  
+  let count = 0;
+  let colorArray = [];
+  patternVectors.forEach(function(vector) {
+    if(rows[i+vector[1]] && rows[i+vector[1]][j+vector[0]] && rows[i+vector[1]][j+vector[0]].newDiv.style.backgroundColor !== 'transparent') {
+      // console.log("checking VECTOR (" + i+vector[1] + "," + j+vector[0] + ")");
+      colorArray.push(rows[i+vector[1]][j+vector[0]].newDiv.style.backgroundColor);      
+    }
+  });
+  return chroma.average(colorArray).hex();
+}
+
+
 
 function convertHex(hex){
     hex = hex.replace('#','');
