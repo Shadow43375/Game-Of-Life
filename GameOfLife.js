@@ -410,3 +410,12 @@ let numberOfCellsY = 10;
 let gameState = new GameState();
 let newGridContainer = new GridContainer(numberOfCellsX, numberOfCellsY);
 
+
+
+
+
+var enterButton  = document.getElementById('enterButton');
+
+enterButton.addEventListener('click', function(){
+  cellColorOnAlive = convertHex(document.getElementById('colorPicker2').value);
+});
