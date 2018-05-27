@@ -179,6 +179,7 @@ GameState.prototype.getNextState = function() {
     for(let i = 0; i < numberOfRows; i++) {
       var rowElement = [];
       for(let j = 0; j < numberOfColumns; j++) {
+        let el = {state: "dead", color: "transparent"};
         cell = stateMatrix[i][j];
         numberOfNeighbors = 0;
         console.log("At cell = (" + j + "," + i + ")");
@@ -192,35 +193,38 @@ GameState.prototype.getNextState = function() {
         if(findCellState(cell, numberOfNeighbors)) {
           console.log("this cell is going to now be alive!");
           // cell.newDiv.cellState = "alive";
-          rowElement.push("alive");
+          el.state = "alive";
+          el.color = averageColors(this.rows, i, j);
+          rowElement.push(el);
         }
         else if(!findCellState(cell, numberOfNeighbors)) {
           console.log("nope: this cell ain't gonna live");
           // cell.newDiv.cellState = "dead";
-          rowElement.push("dead");
+          el.state="dead";
+          el.color = "transparent";
+          rowElement.push(el);
         }
       }
       nextMatrixState.push(rowElement);
     }
+  
+  // alert(nextMatrixState[1][1].state);
   return nextMatrixState;
 }
 
-GameState.prototype.drawMatrix = function(matrix) {
-  let numberOfRows = matrix.length;
-  let numberOfColumns = matrix[0].length;
-  
+GameState.prototype.drawMatrix = function(nextMatrixState) {
+  let numberOfRows = nextMatrixState.length;
+  let numberOfColumns = nextMatrixState[0].length;
+
   for(let i = 0; i < numberOfRows; i++) {
     for(let j = 0; j < numberOfColumns; j++) {
-      //might need to start working with more complex objects that include cellState an its currents color
-      // this.rows[i][j].newDiv.cellState = matrix[i][j]
-      if(matrix[i][j] === 'alive') {
-        // this.rows[i][j].newDiv.cellState = "alive";
-        this.rows[i][j].newDiv.style.backgroundColor = averageColors(this.rows, i, j);
+      if(nextMatrixState[i][j].state === 'alive') {
+        this.rows[i][j].newDiv.style.backgroundColor = nextMatrixState[i][j].color;
         this.rows[i][j].newDiv.cellState = 'alive';
       }
-      else if(matrix[i][j] !== 'alive') {
+      else if(nextMatrixState[i][j].state === 'dead') {
         this.rows[i][j].newDiv.cellState = 'dead';
-        this.rows[i][j].newDiv.style.backgroundColor = "transparent";
+        this.rows[i][j].newDiv.style.backgroundColor = nextMatrixState[i][j].color;
       }
     }
   }
