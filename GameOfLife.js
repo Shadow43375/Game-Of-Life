@@ -239,7 +239,7 @@ let GridContainer = function(numberOfCellsX, numberOfCellsY) {
   let yCordinateOfCell = 1;
   let rowElement = [];
   
-  // dynamically creates styling details for the container grid.
+  // dynamically creatFrowes styling details for the container grid.
   let dimensionsX = 100;
   let dimensionsY = 100;
   this.gridContainer = document.createElement("div");
@@ -423,3 +423,64 @@ var enterButton  = document.getElementById('enterButton');
 enterButton.addEventListener('click', function(){
   cellColorOnAlive = convertHex(document.getElementById('colorPicker2').value);
 });
+
+
+
+
+
+
+document.getElementById('randomButton').addEventListener('click', function(){
+  randomizeGrid(gameState.rows, 0.7);
+});
+
+
+// need to refine this function to allow for the state of the respective cells to be set to 'alive' when the randomazation feature fills in the color
+function randomizeGrid(matrix, percentEmpty) {
+    let numberOfRows = matrix.length;
+    let numberOfColumns = matrix[0].length;
+
+  if(!percentEmpty) {
+    percentEmpty = 0.5;
+  }
+  let percentFull = 1 - percentEmpty;
+
+  let generateWeighedList = function(list, weight) {
+      let weighed_list = [];
+       
+      // Loop over weights
+      for (let i = 0; i < weight.length; i++) {
+          let multiples = weight[i] * 100;
+           
+          // Loop over the list of items
+          for (let j = 0; j < multiples; j++) {
+              weighed_list.push(list[i]);
+          }
+      }
+       
+      return weighed_list;
+  };
+   
+  let list = ['empty', 'nonEmpty'];
+  let weight = [percentEmpty, percentFull];
+  let weighed_list = generateWeighedList(list, weight);
+   
+  let rand = function(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+
+
+  for(let i=0; i<numberOfRows;i++) {
+    for(let j=0; j<numberOfColumns; j++) {
+      let random_num = rand(0, weighed_list.length);
+      if(weighed_list[random_num] === "empty") {
+        matrix[i][j].newDiv.style.backgroundColor = "transparent";
+        matrix[i][j].newDiv.cellState = "dead";
+      }
+      else if(weighed_list[random_num] === "nonEmpty") {
+        matrix[i][j].newDiv.style.backgroundColor = chroma.random();
+        matrix[i][j].newDiv.cellState = "alive";
+      }
+    }
+  } 
+}
